@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.cancel();
-                            Toast.makeText(MainActivity.this, "no notes deleted", Toast.LENGTH_SHORT).show();
+                         //   Toast.makeText(MainActivity.this, "no notes deleted", Toast.LENGTH_SHORT).show();
                         }
                     });
                     builder.create();

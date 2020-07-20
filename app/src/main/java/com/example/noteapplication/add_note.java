@@ -51,8 +51,13 @@ public class add_note extends AppCompatActivity {
         String title = name.getText().toString();
         String disc = de.getText().toString();
         int pirioriy = pir.getValue();
-        noteViewModel.insert(new Note(title, disc, pirioriy));
-        Toast.makeText(this, "note saved ", Toast.LENGTH_SHORT).show();
+       if(!title.isEmpty()||!disc.isEmpty()){
+            noteViewModel.insert(new Note(title, disc, pirioriy));
+            Toast.makeText(this, "note saved ", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            Toast.makeText(this, "sure u enter title and description", Toast.LENGTH_SHORT).show();
+        }
     }
 
 
