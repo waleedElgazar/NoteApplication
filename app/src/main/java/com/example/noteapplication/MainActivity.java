@@ -28,7 +28,9 @@ public class MainActivity extends AppCompatActivity {
     NoteViewModel noteViewModel;
     TextView name, pir, de;
     RecyclerView recyclerView;
-
+    public static final int edit_request=2;
+    final NoteAdapter noteAdapter = new NoteAdapter();
+    RecyclerView.ViewHolder viewHolder;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recylerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
-        final NoteAdapter noteAdapter = new NoteAdapter();
+
         recyclerView.setAdapter(noteAdapter);
 
         noteViewModel = new ViewModelProvider(this,
@@ -66,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
                     builder.setPositiveButton("yes", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            Toast.makeText(MainActivity.this, "u will be delete all notes ", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this, "all noted are deleted ", Toast.LENGTH_SHORT).show();
                             noteViewModel.deleteall();
                         }
                     });
@@ -89,11 +91,13 @@ public class MainActivity extends AppCompatActivity {
         noteAdapter.setOnItemClickListener(new NoteAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Note note) {
-                Intent intent = new Intent(MainActivity.this, add_note.class);
+                Intent intent = new Intent(MainActivity.this, edit_note.class);
                 intent.putExtra(add_note.EXTRA_ID, note.getId());
                 intent.putExtra(add_note.EXTRA_TITLE, note.getName());
                 intent.putExtra(add_note.EXTRA_DESCRIPTION, note.getDescripyion());
                 intent.putExtra(add_note.EXTRA_PRIORITY, note.getPriority());
+                noteViewModel.delete(note);
+                startActivityForResult(intent,edit_request);
             }
         });
 
@@ -111,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
         String title = name.getText().toString();
         String disc = de.getText().toString();
         int pirioriy = Integer.parseInt(pir.getText().toString());
-        Intent intent = new Intent(this, add_note.class);
+        Intent intent = new Intent(this, edit_note.class);
         Bundle bundle = new Bundle();
         bundle.putString("title", title);
         bundle.putString("disc", disc);

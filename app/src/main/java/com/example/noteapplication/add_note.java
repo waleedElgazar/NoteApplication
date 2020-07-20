@@ -41,8 +41,9 @@ public class add_note extends AppCompatActivity {
         name.setText(intent.getStringExtra(EXTRA_TITLE));
         de.setText(intent.getStringExtra(EXTRA_DESCRIPTION));
         pir.setValue(intent.getIntExtra(EXTRA_PRIORITY, 1));
-
-        setTitle("Add Note");
+        {
+            setTitle("note added");
+        }
 
     }
 
@@ -50,11 +51,6 @@ public class add_note extends AppCompatActivity {
         String title = name.getText().toString();
         String disc = de.getText().toString();
         int pirioriy = pir.getValue();
-
-        Intent data = new Intent();
-        data.putExtra(EXTRA_TITLE, title);
-        data.putExtra(EXTRA_DESCRIPTION, disc);
-        data.putExtra(EXTRA_PRIORITY, pirioriy);
         noteViewModel.insert(new Note(title, disc, pirioriy));
         Toast.makeText(this, "note saved ", Toast.LENGTH_SHORT).show();
     }
